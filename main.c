@@ -21,6 +21,11 @@ int max(int a, int b) {
     a > b ? a : b;
 }
 
+int min(int measure, int T){
+  int i;
+  int minor = (measure - 1 > i + T/2) ? i + T/2 : measure - 1;
+}
+
 int pixel_igual(Pixel p1, Pixel p2) {
     if (p1.r == p2.r &&
         p1.g == p2.g &&
@@ -31,11 +36,6 @@ int pixel_igual(Pixel p1, Pixel p2) {
 
 
 Image escala_de_cinza(Image img) {
-    /*for (unsigned int i = 0; i < img.h; ++i) {
-        for (unsigned int j = 0; j < img.w; ++j) {
-            print("%u", img.pixel[i][j][0] + img.pixel[i][j][1] + img.pixel[i][j][2]);
-        }
-    }*/
 
     for (unsigned int i = 0; i < img.h; ++i) {
         for (unsigned int j = 0; j < img.w; ++j) {
@@ -57,8 +57,8 @@ void blur(unsigned int h, unsigned short int pixel[512][512][3], int T, unsigned
         for (unsigned int j = 0; j < w; ++j) {
             Pixel media = {0, 0, 0};
 
-            int menor_h = (h - 1 > i + T/2) ? i + T/2 : h - 1;
-            int min_w = (w - 1 > j + T/2) ? j + T/2 : w - 1;
+            int menor_h = min(h, T);
+            int min_w = min(w, T);
             for(int x = (0 > i - T/2 ? 0 : i - T/2); x <= menor_h; ++x) {
                 for(int y = (0 > j - T/2 ? 0 : j - T/2); y <= min_w; ++y) {
                     media.r += pixel[x][y][0];

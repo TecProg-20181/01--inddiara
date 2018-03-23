@@ -25,10 +25,6 @@ int min(int measure, int image_size){
   int minor = (measure - 1 > i + image_size/2) ? i + image_size/2 : measure - 1;
 }
 
-int verify(int i, int image_size){
-  int x = (0 > i - image_size/2 ? 0 : i - image_size/2);
-}
-
 Pixel calcula_media(Pixel media, int image_size){
   media.r /= image_size * image_size;
   media.g /= image_size * image_size;

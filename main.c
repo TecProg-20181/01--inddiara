@@ -19,26 +19,22 @@ typedef struct _image {
     unsigned int height;
 } Image;
 
-// Nao usada
-//    a > b ? a : b;
-// }
 
 int min(int measure, int image_size){
   int i;
   int minor = (measure - 1 > i + image_size/2) ? i + image_size/2 : measure - 1;
 }
 
-
 int verify(int i, int image_size){
   int x = (0 > i - image_size/2 ? 0 : i - image_size/2);
 }
 
-int pixel_igual(Pixel p1, Pixel p2) {
-    if (p1.r == p2.r &&
-        p1.g == p2.g &&
-        p1.b == p2.b)
-        return 1;
-    return 0;
+Pixel calcula_media(Pixel media, int image_size){
+  media.r /= image_size * image_size;
+  media.g /= image_size * image_size;
+  media.b /= image_size * image_size;
+
+  return media;
 }
 
 
@@ -64,12 +60,10 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], int image_
         for (unsigned int j = 0; j < width; ++j) {
             Pixel media = {0, 0, 0};
 
-            int menor_h = min(height, image_size);
-            int min_w = min(width, image_size);
-            int x = verify(i,image_size);
-            int y = verify(j,image_size);
-            for(x; x <= menor_h; ++x) {
-                for(y; y <= min_w; ++y) {
+            int menor_h = (height - 1 > i + image_size/2) ? i + image_size/2 : height - 1;
+            int min_w = (width - 1 > j + image_size/2) ? j + image_size/2 : width - 1;
+            for(int x = (0 > i - image_size/2 ? 0 : i - image_size/2); x <= menor_h; ++x) {
+               for(int y = (0 > j - image_size/2 ? 0 : j - image_size/2); y <= min_w; ++y) {
                     media.r += pixel[x][y][0];
                     media.g += pixel[x][y][1];
                     media.b += pixel[x][y][2];
@@ -77,9 +71,11 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], int image_
             }
 
             // printf("%u", media.r)
-            media.r /= image_size * image_size;
-            media.g /= image_size * image_size;
-            media.b /= image_size * image_size;
+             media.r /= image_size * image_size;
+             media.g /= image_size * image_size;
+             media.b /= image_size * image_size;
+
+            // media = calcula_media(media, image_size);
 
             pixel[i][j][0] = media.r;
             pixel[i][j][1] = media.g;
@@ -138,8 +134,8 @@ int main() {
     Image img;
 
     // read type of image
-    char type_image[4];
-    scanf("%s", type_image);
+    char p3[4];
+    scanf("%s", p3);
 
     // read width height and color of image
     int max_color;
@@ -257,7 +253,7 @@ int main() {
     }
 
     // print type of image
-    printf("Type of image\n");
+    printf("P3\n");
     // print width height and color of image
     printf("%u %u\n255\n", img.width, img.height);
 

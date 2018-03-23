@@ -58,6 +58,39 @@ Image sepia(Image img){
   return img;
 }
 
+Image espelhamento(Image img){
+    int horizontal = 0;
+    scanf("%d", &horizontal);
+
+    int width = img.width, height = img.height;
+
+      // Ternary operator
+      (horizontal == 1) ? (width /= 2) : (height /= 2);
+
+      for (int i2 = 0; i2 < height; ++i2) {
+          for (int j = 0; j < width; ++j) {
+              int x = i2, y = j;
+
+              if (horizontal == 1) y = img.width - 1 - j;
+              else x = img.height - 1 - i2;
+
+              Pixel aux1;
+              aux1.r = img.pixel[i2][j][0];
+              aux1.g = img.pixel[i2][j][1];
+              aux1.b = img.pixel[i2][j][2];
+
+              img.pixel[i2][j][0] = img.pixel[x][y][0];
+              img.pixel[i2][j][1] = img.pixel[x][y][1];
+              img.pixel[i2][j][2] = img.pixel[x][y][2];
+
+              img.pixel[x][y][0] = aux1.r;
+              img.pixel[x][y][1] = aux1.g;
+              img.pixel[x][y][2] = aux1.b;
+          }
+      }
+      return img;
+}
+
 Image escala_de_cinza(Image img) {
 
     for (unsigned int i = 0; i < img.height; ++i) {
@@ -199,36 +232,8 @@ int main() {
                 }
                 break;
             }
-            case 5: { // Espelhamento
-                int horizontal = 0;
-                scanf("%d", &horizontal);
-
-                int width = img.width, height = img.height;
-
-                // Ternary operator
-                (horizontal == 1) ? (width /= 2) : (height /= 2);
-
-                for (int i2 = 0; i2 < height; ++i2) {
-                    for (int j = 0; j < width; ++j) {
-                        int x = i2, y = j;
-
-                        if (horizontal == 1) y = img.width - 1 - j;
-                        else x = img.height - 1 - i2;
-
-                        Pixel aux1;
-                        aux1.r = img.pixel[i2][j][0];
-                        aux1.g = img.pixel[i2][j][1];
-                        aux1.b = img.pixel[i2][j][2];
-
-                        img.pixel[i2][j][0] = img.pixel[x][y][0];
-                        img.pixel[i2][j][1] = img.pixel[x][y][1];
-                        img.pixel[i2][j][2] = img.pixel[x][y][2];
-
-                        img.pixel[x][y][0] = aux1.r;
-                        img.pixel[x][y][1] = aux1.g;
-                        img.pixel[x][y][2] = aux1.b;
-                    }
-                }
+            case 5: { //Espelhamento
+              img = espelhamento(img);
                 break;
             }
             case 6: { // Inversao de Cores

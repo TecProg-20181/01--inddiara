@@ -20,9 +20,9 @@ typedef struct _image {
 } Image;
 
 
-int min(int measure, int image_size){
+int min(int a, int b){
   int i;
-  int minor = (measure - 1 > i + image_size/2) ? i + image_size/2 : measure - 1;
+  int minor = (a - 1 > i + b/2) ? i + b/2 : a - 1;
 }
 
 Pixel calcula_media(Pixel media, int image_size){
@@ -80,6 +80,7 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], int image_
         for (unsigned int j = 0; j < width; ++j) {
             Pixel media = {0, 0, 0};
 
+            //Criar função para y e x
             int menor_h = (height - 1 > i + image_size/2) ? i + image_size/2 : height - 1;
             int min_w = (width - 1 > j + image_size/2) ? j + image_size/2 : width - 1;
             for(int x = (0 > i - image_size/2 ? 0 : i - image_size/2); x <= menor_h; ++x) {

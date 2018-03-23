@@ -23,14 +23,14 @@ typedef struct _image {
 //    a > b ? a : b;
 // }
 
-int min(int measure, int T){
+int min(int measure, int image_size){
   int i;
-  int minor = (measure - 1 > i + T/2) ? i + T/2 : measure - 1;
+  int minor = (measure - 1 > i + image_size/2) ? i + image_size/2 : measure - 1;
 }
 
 
-int verify(int i, int T){
-  int x = (0 > i - T/2 ? 0 : i - T/2);
+int verify(int i, int image_size){
+  int x = (0 > i - image_size/2 ? 0 : i - image_size/2);
 }
 
 int pixel_igual(Pixel p1, Pixel p2) {
@@ -59,15 +59,15 @@ Image escala_de_cinza(Image img) {
     return img;
 }
 
-void blur(unsigned int height, unsigned short int pixel[512][512][3], int T, unsigned int width) {
+void blur(unsigned int height, unsigned short int pixel[512][512][3], int image_size, unsigned int width) {
     for (unsigned int i = 0; i < height; ++i) {
         for (unsigned int j = 0; j < width; ++j) {
             Pixel media = {0, 0, 0};
 
-            int menor_h = min(height, T);
-            int min_w = min(width, T);
-            int x = verify(i,T);
-            int y = verify(j,T);
+            int menor_h = min(height, image_size);
+            int min_w = min(width, image_size);
+            int x = verify(i,image_size);
+            int y = verify(j,image_size);
             for(x; x <= menor_h; ++x) {
                 for(y; y <= min_w; ++y) {
                     media.r += pixel[x][y][0];
@@ -77,9 +77,9 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], int T, uns
             }
 
             // printf("%u", media.r)
-            media.r /= T * T;
-            media.g /= T * T;
-            media.b /= T * T;
+            media.r /= image_size * image_size;
+            media.g /= image_size * image_size;
+            media.b /= image_size * image_size;
 
             pixel[i][j][0] = media.r;
             pixel[i][j][1] = media.g;

@@ -37,6 +37,30 @@ Pixel calcula_media(Pixel media, int image_size){
   return media;
 }
 
+Image sepia(Image img){
+  for (unsigned int x = 0; x < img.height; ++x) {
+      for (unsigned int j = 0; j < img.width; ++j) {
+          unsigned short int pixel[3];
+          pixel[0] = img.pixel[x][j][0];
+          pixel[1] = img.pixel[x][j][1];
+          pixel[2] = img.pixel[x][j][2];
+
+          int p =  pixel[0] * .393 + pixel[1] * .769 + pixel[2] * .189;
+          int menor_r = (255 >  p) ? p : 255;
+          img.pixel[x][j][0] = menor_r;
+
+          p =  pixel[0] * .349 + pixel[1] * .686 + pixel[2] * .168;
+          menor_r = (255 >  p) ? p : 255;
+          img.pixel[x][j][1] = menor_r;
+
+          p =  pixel[0] * .272 + pixel[1] * .534 + pixel[2] * .131;
+          menor_r = (255 >  p) ? p : 255;
+          img.pixel[x][j][2] = menor_r;
+      }
+  }
+
+  return img;
+}
 
 Image escala_de_cinza(Image img) {
 
@@ -70,12 +94,8 @@ void blur(unsigned int height, unsigned short int pixel[512][512][3], int image_
                 }
             }
 
-            // printf("%u", media.r)
-             media.r /= image_size * image_size;
-             media.g /= image_size * image_size;
-             media.b /= image_size * image_size;
 
-            // media = calcula_media(media, image_size);
+            media = calcula_media(media, image_size);
 
             pixel[i][j][0] = media.r;
             pixel[i][j][1] = media.g;
@@ -164,7 +184,7 @@ int main() {
                 break;
             }
             case 2: { // Filtro Sepia
-                for (unsigned int x = 0; x < img.height; ++x) {
+                /*for (unsigned int x = 0; x < img.height; ++x) {
                     for (unsigned int j = 0; j < img.width; ++j) {
                         unsigned short int pixel[3];
                         pixel[0] = img.pixel[x][j][0];
@@ -183,7 +203,8 @@ int main() {
                         menor_r = (255 >  p) ? p : 255;
                         img.pixel[x][j][2] = menor_r;
                     }
-                }
+                }*/
+                img = sepia(img);
 
                 break;
             }

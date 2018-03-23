@@ -8,7 +8,6 @@ typedef struct _pixel {
     unsigned short int b;
 } Pixel;
 
-// Renamed w and h variables
 typedef struct _image {
     // [width][height][rgb]
     // 0 -> r
@@ -233,7 +232,7 @@ int main() {
                 break;
             }
             case 5: { //Espelhamento
-              img = espelhamento(img);
+                img = espelhamento(img);
                 break;
             }
             case 6: { // Inversao de Cores
